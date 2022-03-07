@@ -32,21 +32,32 @@ void startgame() {
 	loadpic();
 	while (true) {
 		m = getmessage(EM_MOUSE | EM_KEY);
-		switch (m.message)
-		{
-		case WM_LBUTTONDOWN:
-			if (m.x >= 385 && m.x <= 570 && m.y >= 400 && m.y <= 427)
-				showpic(1);
-			else if (m.x >= 420 && m.x <= 538 && m.y >= 440 && m.y <= 470)
-				showpic(2);
-			else if (m.x >= 440 && m.x <= 519 && m.y >= 490 && m.y <= 522)
-				exit(0);
 
-			break;
+		if (m.x >= 385 && m.x <= 575 && m.y >= 400 && m.y <= 435) {
+			setlinecolor(GREEN);
+			rectangle(385, 400, 575, 435);
+			if (m.message == WM_LBUTTONDOWN)
+				showpic(1);
+		}
+		else if (m.x >= 440 && m.x <= 520 && m.y >= 450 && m.y <= 485)
+		{
+			setlinecolor(GREEN);
+			rectangle(440, 450, 520, 485);
+			if (m.message == WM_LBUTTONDOWN)
+				showpic(2);
 		}
 
+		else if (m.x >= 440 && m.x <= 519 && m.y >= 500 && m.y <= 535) {
+			setlinecolor(GREEN);
+			rectangle(440, 500, 519, 535);
+			if (m.message == WM_LBUTTONDOWN)
+				exit(0);
+		}
+		else {
+			setlinecolor(TRANSPARENT);
+			rectangle(0, 0, 0, 0);
+		}
 	}
-
 }
 
 //load the pics
