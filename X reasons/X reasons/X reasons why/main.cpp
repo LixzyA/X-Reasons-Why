@@ -1,28 +1,24 @@
 #include<graphics.h>
 #include<conio.h>
 #include <iostream>
-using namespace std;
+#include"pics.h"
 #define WIDTH 960
 #define HEIGHT 720
 
-IMAGE img[50];// variable for the image
-IMAGE mainpage;
-TCHAR imagename[50];
 ExMessage m;
 
 void loadpic();
 void showpic(int x);
 void startpage();
 void loadgame();
-
 bool flag = true;
+
 
 int main() {
 	initgraph(WIDTH, HEIGHT);
 	startpage();
 	loadgame();
 
-	_getch();
 	closegraph();
 	return 0;
 }
@@ -34,7 +30,7 @@ void startpage() {
 	while (flag) {
 		m = getmessage(EM_MOUSE | EM_KEY);
 		
-		//written by yuxiao 08/03/2022 18.13
+		//written by yuxiao 08/03/2022 18:13
 		putimage(0, 0, &mainpage);
 		settextcolor(WHITE);
 		settextstyle(40, 0, L"Gill Sans Ultra Bold");
@@ -50,16 +46,16 @@ void startpage() {
 				goto exitloop;
 			}
 			else if (m.x >= 440 && m.x <= 520 && m.y >= 445 && m.y <= 480) { //help
-				showpic(1);
-				_getch();
-				continue;
+				helppage();
+				(void)_getch();
+				continue;//goes back to start page
 			}
 			else if (m.x >= 440 && m.x <= 519 && m.y >= 495 && m.y <= 530) { // quit
 				exit(0);
 			}
 			break;
 
-		//written by yuxiao 08/03/2022 18.13
+		//written by yuxiao 08/03/2022 18:13
 		//hover animation
 		case WM_MOUSEMOVE:
 			if (m.x >= 385 && m.x <= 575 && m.y >= 400 && m.y <= 435) {//start
@@ -77,33 +73,19 @@ void startpage() {
 		}
 
 	}
-	exitloop: ;
+	exitloop: ;// exits the loop
 }
 
 //after the start page
 //load the game
 void loadgame() {
+	int page = 1;
 	while (flag) {
-		int clicks= 2;
-		loadpic();
-		showpic(clicks);
 		m = getmessage(EM_MOUSE | EM_KEY);
+		loadpic();
+		showpic(page);
 		if (m.message == WM_LBUTTONDOWN) {
-			clicks++;
+			page++;//go to next page if player leftclick
 		}
-		
 	}
-}
-
-//load the pics
-void loadpic() {
-	for (int i = 1; i <= 5; i++) {
-		_stprintf_s(imagename, _T("../Image/back%d.jpg"), i);
-		loadimage(&img[i], imagename, WIDTH, HEIGHT);
-	}
-}
-
-//put the image into the screen
-void showpic(int i) {
-	putimage(0, 0, &img[i]);
 }
